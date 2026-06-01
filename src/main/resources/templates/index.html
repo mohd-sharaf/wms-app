@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WMS Dashboard</title>
+    <style>
+        body { font-family: sans-serif; background: #2c3e50; color: white; padding: 20px; }
+        .card { background: #34495e; padding: 15px; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>لوحة تحكم المخزن (WMS)</h1>
+        <div id="status">جاري الاتصال dockerبالسيرفر...</div>
+    </div>
+    <script>
+    fetch('/api/status')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('status').innerHTML = "الحdockerالة: " + data.status + " | التحميل: " + data.load;
+        });
+    </script>
+</body>
+</html>

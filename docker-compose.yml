@@ -1,0 +1,29 @@
+services:
+  # خدمة تطبيق الـ WMS
+  wms-app:
+    image: msharaf92/wms-app:latest
+    container_name: wms-container
+    ports:
+      - "8082:8081"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/warehouse_db
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=pass
+    depends_on:
+      - db
+    restart: always
+
+  # خدمة قاعدة بيانات PostgreSQL
+  db:
+    image: postgres:17-alpine
+    container_name: wms-db
+    environment:
+      - POSTGRES_DB=warehouse_db
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # لضمان عدم ضياع البيانات عند إغلاق الحاوية
+    restart: always
+
+volumes:
+  postgres_data:
